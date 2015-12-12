@@ -17,3 +17,9 @@ It does not come with a built-in editing system, so collaborators will need acce
 ### Motivation
 
 Wiki-in-a-flask was inspired by the great brevity and detail of [Wookieepedia](https://starwars.wikia.com/wiki/Main_Page), the Star Wars fan wikia. I thought that the idea of mapping out an entire universe, its stories, and lore in encyclopedia fashion would be very helpful to worldbuilders and story-tellers. Lacking a simple and lightweight solution, I have written this server to make organising "articles" of information easy to do.
+
+### Pictures!
+
+So [here](https://i.imgur.com/471kHA8.png) and [here](https://i.imgur.com/cYj1o31.png) is what it looks like.
+
+![Scarlett Johansson](https://i.imgur.com/cYj1o31.png)
