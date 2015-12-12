@@ -23,4 +23,10 @@ And here is the source to those same pages in Markdown. You should be able to un
   - [Scarlett Johansson Source](/wiki/Scarlett_Johansson/md)
   - [Scarlett Johansson Sidebar Source](/wiki/Scarlett_Johansson_Detail/md)
 
-Take note of the table format in the sidebar source.
+Take note of the table format in the sidebar source. Files in the *static/* folder are accessible by the server as well, and can be used to access images and the like.
+
+Case in point: <a href="/static/kittens.webm">/static/kittens.webm</a>
+
+<video controls="controls" autoplay="autoplay">
+    <source src="/static/kittens.webm" type="video/webm" />
+</video>
