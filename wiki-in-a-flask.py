@@ -19,8 +19,9 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 	<head>
 		<title>{{ title }}</title>
 		<style>
-			html {
-				font-family:Arial;
+			body {
+				margin:0px;
+				font-family:sans-serif;
 			}
 			a {
 				text-decoration:none;
@@ -32,9 +33,17 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 			h1, h2 {
 				border-bottom:1px solid #aaa;
 			}
+			h3 {
+				font-size:1.3em;
+			}
 			#sidebar {
-				width:200px;
+				width:140px;
 				vertical-align:top;
+				font-size:11pt;
+			}
+			#sidebar ul {
+				list-style-type:none;
+				padding-left:5px;
 			}
 			#detail {
 				width:250px;
@@ -65,8 +74,8 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 			}
 			#content {
 				vertical-align:text-top;
-				width:800px;
-				max-width:800px;
+				width:860px;
+				max-width:860px;
 				font-size:11pt;
 			}
 			p {
@@ -96,8 +105,10 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 		<table style="border:0px solid black;">
 			<tr>
 				<td id="sidebar">
-					<img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG" width="200" height="200" /><br/>
-					<a href="/wiki/">Main page</a>
+					<img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG" width="140" height="140" /><br/>
+					<ul>
+						<li><a href="/wiki/">Main page</a></li>
+					</ul>
 				</td>
 				<td id="content">
 					{{ contenthtml }}
