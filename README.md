@@ -22,4 +22,4 @@ Wiki-in-a-flask was inspired by the great brevity and detail of [Wookieepedia](h
 
 So [here](https://i.imgur.com/471kHA8.png) and [here](https://i.imgur.com/cYj1o31.png) is what it looks like.
 
-![Scarlett Johansson](https://i.imgur.com/cYj1o31.png)
+![Scarlett Johansson](https://i.imgur.com/otVRPIs.png)
