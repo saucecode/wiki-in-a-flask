@@ -38,12 +38,16 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 			}
 			#sidebar {
 				width:140px;
+				max-width:140px;
 				vertical-align:top;
 				font-size:11pt;
 			}
 			#sidebar ul {
 				list-style-type:none;
 				padding-left:5px;
+			}
+			#sidebar input {
+				max-width:140px;
 			}
 			#detail {
 				width:250px;
@@ -108,6 +112,12 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 					<img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG" width="140" height="140" /><br/>
 					<ul>
 						<li><a href="/wiki/">Main page</a></li>
+						<li>
+							<form action='/search/' method='GET'>
+								<input type='text' name='query' /><br/>
+								<input type='submit' value='Search' />
+							</form>
+						</li>
 					</ul>
 				</td>
 				<td id="content">
@@ -165,6 +175,13 @@ def createArticle(article=None):
 	if os.path.exists('./wiki/%s.md' % article): return "<a href='/wiki/%s'>This page already exists!</a>" % article
 	with open('./wiki/%s.md'%article ,'wb') as f: f.write(article.replace('_',' ') + '\n=======')
 	return "<a href='/wiki/%s'>Article created.</a>" % article
+
+@app.route('/search/')
+def searchWiki():
+	query = request.args.get('query').replace(' ','_')
+	files = [x for x in os.listdir('./wiki/') if not x.endswith('_Detail.md')]
+	results = ['<a href="/wiki/'+x[:-3]+'">'+x[:-3].replace('_',' ')+'</a>' for x in files if query.lower() in x.lower()]
+	return 'Found %i results!<br/>' % len(results) + '<br/>'.join(results)
 
 if __name__ == '__main__':
 	app.run(threaded=True, debug=True, host='localhost', port=8080)
