@@ -95,9 +95,9 @@ TEMPLATE_HTML = '''<!DOCTYPE html>
 			blockquote p {
 				font-size:12pt;
 			}
-			li ul {
-				padding-left:20px;
+			ul li {
 				list-style-type:disc;
+				padding-bottom:1px;
 			}
 		</style>
 	</head>
@@ -140,8 +140,10 @@ def wikiIndexPage():
 
 @app.route('/wiki/<article>')
 def viewArticle(article=None):
-	if not article or not os.path.exists('./wiki/%s.md' % (article,)):
+	if not article:
 		return abort(404)
+	if not os.path.exists('./wiki/%s.md' % (article,)):
+		return "This page does not yet exist!<br/><a href='/createpage/%s'>Create!</a>" % article
 	detailhtml = ''
 	if os.path.exists('./wiki/%s_Detail.md' % (article,)):
 		detailhtml = render_markdown(loadResource('./wiki/%s_Detail.md' % (article,)))
@@ -157,6 +159,12 @@ def viewArticleMarkdown(article=None):
 	with open('./wiki/%s.md' % (article,), 'rb') as f:
 		return Response(f.read(), mimetype='text/plain')
 
+@app.route('/createpage/<article>')
+def createArticle(article=None):
+	if not article: return abort(404)
+	if os.path.exists('./wiki/%s.md' % article): return "<a href='/wiki/%s'>This page already exists!</a>" % article
+	with open('./wiki/%s.md'%article ,'wb') as f: f.write(article.replace('_',' ') + '\n=======')
+	return "<a href='/wiki/%s'>Article created.</a>" % article
 
 if __name__ == '__main__':
 	app.run(threaded=True, debug=True, host='localhost', port=8080)
