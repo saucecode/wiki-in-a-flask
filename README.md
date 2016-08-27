@@ -20,6 +20,6 @@ Wiki-in-a-flask was inspired by the great brevity and detail of [Wookieepedia](h
 
 ### Pictures!
 
-So [here](https://i.imgur.com/471kHA8.png) and [here](https://i.imgur.com/cYj1o31.png) is what it looks like.
+![Scarlett Johansson](https://i.imgur.com/v14D51W.png)
 
-![Scarlett Johansson](https://i.imgur.com/otVRPIs.png)
+This image is currently up to date with the codebase.
