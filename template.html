@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8" />
+		<style>
+			body {
+				margin:0px 0px;
+				font-family:sans-serif;
+			}
+			h1 {
+				margin-bottom:0px;
+				margin-top:0px;
+				font-size:26pt;
+			}
+			h1, h2 {
+				border-bottom:1px solid #aaa;
+			}
+			h3 {
+				font-size:1.3em;
+			}
+			#sidebar {
+				float:left;
+				font-size:12pt;
+			}
+			#page {
+				padding-left:180px;
+			}
+			#content {
+				margin-left:12px;
+				margin-right:18px;
+			}
+			#content p {
+				font-size:11pt;
+			}
+			#heading {
+				border-bottom:1px solid black;
+				margin-bottom:16px;
+			}
+			#heading h1 {
+				font-style:italic;
+				font-family:serif;
+			}
+			
+			#information {
+				max-width:280px;
+				
+				border:1px solid #ccc;
+				float:right;
+				padding:10px;
+				margin:8px;
+				background-color:#f5f5f5;
+			}
+			#information #title {
+				background-color:#9999ff;
+				
+				display:block;
+				text-align:center;
+				margin-bottom:8px;
+				font-style:italic;
+			}
+			#information img {
+				width:280px;
+				
+				height:auto;
+				display:block;
+				margin-left:auto;
+				margin-right:auto;
+			}
+			#information table {
+				width:280px;
+				
+				font-size:10pt;
+			}
+			#information table td {
+				vertical-align:top;
+				width:140px;
+			}
+			#information a {
+				text-decoration:none;
+			}
+		</style>
+	</head>
+	<body>
+		<aside id="sidebar">
+			<img src="https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG" width="180" height="180" /><br/>
+			<a href="/wiki/">Main page</a>
+		</aside>
+		<div id="page">
+			<header id="heading">
+				
+			</header>
+			
+			<div id="article">
+				<aside id="information">
+					{{ detailhtml }}
+				</aside>
+				
+				<section id="content">
+					{{ contenthtml }}
+				</section>
+			</div>
+		</div>
+	</body>
+</html>
