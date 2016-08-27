@@ -8,7 +8,7 @@ It does not come with a built-in editing system, so collaborators will need acce
 
 ## Motivation
 
-Wiki-in-a-flask was inspired by the great brevity and detail of [Wookieepedia](https://starwars.wikia.com/wiki/Main_Page), the Star Wars fan wikia. I thought that the idea of mapping out an entire universe, its stories, and lore in encyclopedia fashion would be very helpful to worldbuilders and story-tellers.
+Wiki-in-a-flask was inspired by the great brevity and detail of [Wookieepedia](https://starwars.wikia.com/wiki/Main_Page), the Star Wars fan wikia. I thought that the idea of mapping out an entire universe, its stories, and lore in encyclopedic fashion would be very helpful to worldbuilders and story-tellers.
 
 ## Examples
 
