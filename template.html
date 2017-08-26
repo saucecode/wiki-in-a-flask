@@ -1,3 +1,5 @@
+{% autoescape false %}
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -41,10 +43,10 @@
 				font-style:italic;
 				font-family:serif;
 			}
-			
+
 			#information {
 				max-width:280px;
-				
+
 				border:1px solid #ccc;
 				float:right;
 				padding:10px;
@@ -53,7 +55,7 @@
 			}
 			#information #title {
 				background-color:#9999ff;
-				
+
 				display:block;
 				text-align:center;
 				margin-bottom:8px;
@@ -61,7 +63,7 @@
 			}
 			#information img {
 				width:280px;
-				
+
 				height:auto;
 				display:block;
 				margin-left:auto;
@@ -69,7 +71,7 @@
 			}
 			#information table {
 				width:280px;
-				
+
 				font-size:10pt;
 			}
 			#information table td {
@@ -88,14 +90,14 @@
 		</aside>
 		<div id="page">
 			<header id="heading">
-				
+
 			</header>
-			
+
 			<div id="article">
 				<aside id="information">
 					{{ detailhtml }}
 				</aside>
-				
+
 				<section id="content">
 					{{ contenthtml }}
 				</section>
@@ -103,3 +105,4 @@
 		</div>
 	</body>
 </html>
+{% endautoescape %}
