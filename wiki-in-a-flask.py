@@ -13,8 +13,8 @@ def loadResource(fname):
 def render_markdown(md):
 	return MD.markdown(md, extensions=['markdown.extensions.tables'])
 
-INDEX_HTML = loadResource('index.html')
-with open('template.html','rb') as f: TEMPLATE_HTML = f.read()
+INDEX_HTML = loadResource('index.html').decode()
+with open('template.html','r') as f: TEMPLATE_HTML = f.read()
 
 @app.route('/')
 def indexPage():
@@ -29,7 +29,7 @@ def getStaticResource(fname=None):
 def wikiIndexPage():
 	return render_template_string(TEMPLATE_HTML,
 		title='Wiki Index',
-		contenthtml=render_markdown(loadResource('wiki.md'))
+		contenthtml=render_markdown(loadResource('wiki.md').decode())
 	)
 
 @app.route('/wiki/<article>')
@@ -40,24 +40,24 @@ def viewArticle(article=None):
 		return "This page does not yet exist!<br/><a href='/createpage/%s'>Create!</a>" % article
 	detailhtml = ''
 	if os.path.exists('./wiki/%s_Detail.md' % (article,)):
-		detailhtml = render_markdown(loadResource('./wiki/%s_Detail.md' % (article,)))
+		detailhtml = render_markdown(loadResource('./wiki/%s_Detail.md' % (article,)).decode())
 	return render_template_string(TEMPLATE_HTML,
 		title=article.replace('_',' '),
-		contenthtml=render_markdown(loadResource('./wiki/%s.md' % (article,))),
+		contenthtml=render_markdown(loadResource('./wiki/%s.md' % (article,)).decode()),
 		detailhtml=detailhtml
 	)
 
 @app.route('/wiki/<article>/md')
 def viewArticleMarkdown(article=None):
 	if not article: return abort(404)
-	with open('./wiki/%s.md' % (article,), 'rb') as f:
+	with open('./wiki/%s.md' % (article,), 'r') as f:
 		return Response(f.read(), mimetype='text/plain')
 
 @app.route('/createpage/<article>')
 def createArticle(article=None):
 	if not article: return abort(404)
 	if os.path.exists('./wiki/%s.md' % article): return "<a href='/wiki/%s'>This page already exists!</a>" % article
-	with open('./wiki/%s.md'%article ,'wb') as f: f.write(article.replace('_',' ') + '\n=======')
+	with open('./wiki/%s.md'%article ,'w') as f: f.write(article.replace('_',' ') + '\n=======')
 	return "<a href='/wiki/%s'>Article created.</a>" % article
 
 @app.route('/search/')
