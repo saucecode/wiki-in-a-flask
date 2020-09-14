@@ -1,8 +1,10 @@
 # wiki-in-a-flask.py
-# requires: python2.7, flask (pip), markdown (pip)
+# requires: python3, flask, markdown, gnupg
 from flask import *
-import os, mimetypes
+import os, mimetypes, time, gnupg, subprocess
 import markdown as MD
+
+GNUPGHOME = '/home/julian/.gnupg'
 
 app = Flask(__name__)
 guessType = lambda x:mimetypes.guess_type(x)[0] or 'application/octet-stream'
@@ -52,6 +54,61 @@ def viewArticleMarkdown(article=None):
 	if not article: return abort(404)
 	with open('./wiki/%s.md' % (article,), 'r') as f:
 		return Response(f.read(), mimetype='text/plain')
+
+@app.route('/wiki/<article>/edit', methods=['POST', 'GET'])
+def editArticle(article=None):
+	if not article: return abort(404)
+	
+	if request.method == 'POST':
+		with open('trusted_keys','r') as f: trusted = f.read().strip().split('\n')
+		
+		gpg = gnupg.GPG(gnupghome=GNUPGHOME)
+		verification = gpg.verify(request.data)
+		if not verification:
+			return f'Error: Signature failed to verify.\n', 403
+			
+		if verification.fingerprint not in trusted:
+			return f'ERROR: The fingerprint {verification.fingerprint} is not trusted.\nPlease contact the administrator.\n', 403
+		
+		# save the signed changes to disk
+		changename = time.strftime('%Y%m%dT%H%M%S_') + article + '.md.sig'
+		with open(f'changes/{changename}', 'wb') as f:
+			f.write(request.data)
+		
+		# write the actual new page to disk
+		with open(f'changes/{changename}.tmp', 'wb') as f:
+			f.write(gpg.decrypt(request.data).data)
+		
+		# generate a patch file
+		patchname = changename.replace('.sig', '.patch')
+		with open(f'changes/{patchname}', 'wb') as f:
+			subprocess.call(['diff', f'wiki/{article}.md', f'changes/{changename}.tmp'], stdout=f)
+		
+		# remove the tmp file
+		os.remove(f'changes/{changename}.tmp')
+		
+		# apply the patch
+		subprocess.call(['patch', f'wiki/{article}.md', f'changes/{patchname}'])
+		
+		return 'Ok!\n'
+		
+	else:
+		return Response('''To edit this page you will need:
+	- wget or curl
+	- a gpg key
+
+Download the page with
+	$ wget -O {article}.md https://{host}/wiki/{article}/md
+
+Edit the page using your editor of choice
+	$ nano {article}.md
+
+Sign the modified page with your GPG key
+	$ gpg --output {article}.md.sig --clearsign {article}.md
+
+Send it to the wiki, with an optional comment
+	$ cat {article}.md.sig | curl -X POST -H "Comment: YOUR COMMENT HERE" -H "Content-Type: text/plain" --data-binary "@-" https://{host}/wiki/{article}/edit
+'''.format(host=request.headers.get('Host'), article=article), mimetype='text/plain')
 
 @app.route('/createpage/<article>')
 def createArticle(article=None):
