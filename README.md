@@ -1,6 +1,8 @@
 # wiki-in-a-flask
 a tiny markdown-based wiki server
 
+Please see the `gpg` branch if you want to permit/automate gpg signed community contributions to your wiki sites!
+
 ### Installation & Running
 
 	$ pip install flask
